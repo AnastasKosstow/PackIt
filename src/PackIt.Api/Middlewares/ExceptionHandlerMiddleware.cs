@@ -38,7 +38,9 @@ public class ExceptionHandlerMiddleware
         switch (exception)
         {
             case EmptyPackingListNameException:
-                return HttpStatusCode.InternalServerError;
+                return HttpStatusCode.BadRequest; 
+            case LocalizationParameterException:
+                return HttpStatusCode.BadRequest;
 
             default:
                 return HttpStatusCode.InternalServerError;

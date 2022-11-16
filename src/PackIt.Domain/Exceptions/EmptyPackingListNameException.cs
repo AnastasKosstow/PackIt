@@ -5,6 +5,7 @@ namespace PackIt.Domain.Exceptions;
 public class EmptyPackingListNameException : BaseDomainException
 {
     public EmptyPackingListNameException()
-        =>
-        this.Error = "Packing list name cannot be empty.";
+    {
+        this.ErrorMessage = "Packing list name cannot be empty.";
+    }
 }

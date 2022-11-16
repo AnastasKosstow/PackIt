@@ -1,4 +1,6 @@
-﻿namespace PackIt.Domain.ValueObjects;
+﻿using PackIt.Domain.Exceptions;
+
+namespace PackIt.Domain.ValueObjects;
 
 internal record PackingListName
 {
@@ -8,9 +10,19 @@ internal record PackingListName
 	{
 		if (string.IsNullOrWhiteSpace(value))
 		{
-
-		}
+			throw new EmptyPackingListNameException();
+        }
 
 		Value = value;
 	}
+
+	public static implicit operator string(PackingListName name)
+	{
+		return name.Value;
+	}
+
+    public static implicit operator PackingListName(string name)
+    {
+		return new PackingListName(name);
+    }
 }
