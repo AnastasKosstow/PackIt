@@ -7,17 +7,15 @@ internal record Localization
     public string City { get; private set; }
     public string Country { get; private set; }
 
-    public Localization(string city, string country)
+    internal Localization(string city, string country)
     {
         if (string.IsNullOrWhiteSpace(city))
         {
-            string message = $"Localization parameter \"{nameof(city)}\" cannot be empty.";
-            throw new LocalizationParameterException(message);
+            throw new LocalizationParameterException($"Localization parameter \"{nameof(city)}\" cannot be empty.");
         }
         if (string.IsNullOrWhiteSpace(country))
         {
-            string message = $"Localization parameter \"{nameof(country)}\" cannot be empty.";
-            throw new LocalizationParameterException(message);
+            throw new LocalizationParameterException($"Localization parameter \"{nameof(country)}\" cannot be empty.");
         }
 
         City = city;

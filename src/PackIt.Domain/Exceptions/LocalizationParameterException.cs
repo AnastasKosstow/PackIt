@@ -4,12 +4,12 @@ namespace PackIt.Domain.Exceptions;
 
 public class LocalizationParameterException : BaseDomainException
 {
-    public LocalizationParameterException()
+    internal LocalizationParameterException()
     {
         this.ErrorMessage = "One of localization parameters is null or empty.";
     }
 
-    public LocalizationParameterException(string message)
+    internal LocalizationParameterException(string message)
     {
         this.ErrorMessage = message;
     }

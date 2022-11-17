@@ -1,10 +1,10 @@
-﻿using PackIt.Domain.Abstractions.Exceptions;
+﻿using PackIt.Domain.Abstractions;
 
 namespace PackIt.Domain.Exceptions;
 
-public class EmptyPackingListNameException : BaseDomainException
+public class EmptyPackingListNameException : DomainException
 {
-    public EmptyPackingListNameException()
+    internal EmptyPackingListNameException()
     {
         this.ErrorMessage = "Packing list name cannot be empty.";
     }
