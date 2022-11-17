@@ -2,7 +2,7 @@
 
 namespace PackIt.Domain.ValueObjects;
 
-internal record Localization
+public record Localization
 {
     public string City { get; private set; }
     public string Country { get; private set; }
