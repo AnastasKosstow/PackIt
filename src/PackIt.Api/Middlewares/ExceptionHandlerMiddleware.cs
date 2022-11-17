@@ -50,7 +50,7 @@ public class ExceptionHandlerMiddleware
 
 public static class ExceptionHandlerMiddlewareExtensions
 {
-    public static IApplicationBuilder UseExceptionHandler(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseErrorHandler(this IApplicationBuilder builder)
     {
         return builder.UseMiddleware<ExceptionHandlerMiddleware>();
     }

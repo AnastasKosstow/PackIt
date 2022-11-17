@@ -1,11 +1,16 @@
-﻿using PackIt.Domain.Abstractions;
+﻿namespace PackIt.Domain.Exceptions;
 
-namespace PackIt.Domain.Exceptions;
-
-internal class PackingItemAlreadyExistsException : DomainException
+internal class PackingItemAlreadyExistsException : Exception
 {
+    private const string DEFAULT_MESSAGE = "Packing item with the same name already exists.";
+
     internal PackingItemAlreadyExistsException()
+        : base(string.Format(DEFAULT_MESSAGE))
     {
-        this.ErrorMessage = "Packing item with the same name already exists.";
+    }
+
+    internal PackingItemAlreadyExistsException(string message)
+        : base(string.Format(message))
+    {
     }
 }

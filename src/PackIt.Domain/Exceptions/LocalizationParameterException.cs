@@ -1,16 +1,16 @@
-﻿using PackIt.Domain.Abstractions;
+﻿namespace PackIt.Domain.Exceptions;
 
-namespace PackIt.Domain.Exceptions;
-
-public class LocalizationParameterException : DomainException
+public class LocalizationParameterException : Exception
 {
+    private const string DEFAULT_MESSAGE = "One of Localization parameters is null or empty.";
+
     internal LocalizationParameterException()
+        : base(string.Format(DEFAULT_MESSAGE))
     {
-        this.ErrorMessage = "One of Localization parameters is null or empty.";
     }
 
     internal LocalizationParameterException(string message)
+        : base(string.Format(message))
     {
-        this.ErrorMessage = message;
     }
 }

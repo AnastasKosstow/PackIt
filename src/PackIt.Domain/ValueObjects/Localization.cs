@@ -7,7 +7,7 @@ public record Localization
     public string City { get; private set; }
     public string Country { get; private set; }
 
-    internal Localization(string city, string country)
+    public Localization(string city, string country)
     {
         if (string.IsNullOrWhiteSpace(city))
         {

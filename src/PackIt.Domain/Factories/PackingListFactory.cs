@@ -1,7 +1,6 @@
 ﻿using PackIt.Domain.Entities;
-using PackIt.Domain.Factories.Configurations.Localization;
-using PackIt.Domain.Factories.Configurations.PackingListName;
 using PackIt.Domain.ValueObjects;
+using PackIt.Domain.Factories.Configurations.Localization;
 
 namespace PackIt.Domain.Factories;
 
@@ -17,10 +16,9 @@ internal sealed class PackingListFactory : IPackingListFactory
         return this;
     }
 
-    public IPackingListFactory WithName(Action<IPackingListNameConfiguration> packingListNameAction)
+    public IPackingListFactory WithName(string name)
     {
-        var configuration = new PackingListNameConfiguration();
-        packingListNameAction?.Invoke(configuration);
+        this.listName = new PackingListName(name);
         return this;
     }
 
@@ -28,6 +26,8 @@ internal sealed class PackingListFactory : IPackingListFactory
     {
         var configuration = new LocalizationConfiguration();
         localizationAction?.Invoke(configuration);
+
+        this.localization = new Localization(configuration.CountryValue, configuration.CityValue);
         return this;
     }
 

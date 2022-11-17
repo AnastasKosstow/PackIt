@@ -2,7 +2,7 @@
 
 namespace PackIt.Domain.ValueObjects;
 
-internal record PackingItem
+public record PackingItem
 {
     public string Name { get; private set; }
     public ushort Quantity { get; private set; }

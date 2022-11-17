@@ -1,16 +1,16 @@
-﻿using PackIt.Domain.Abstractions;
+﻿namespace PackIt.Domain.Exceptions;
 
-namespace PackIt.Domain.Exceptions;
-
-public class PackingItemParameterException : DomainException
+public class PackingItemParameterException : Exception
 {
+    private const string DEFAULT_MESSAGE = "One of PackingItem parameters is null or empty.";
+
     internal PackingItemParameterException()
+        : base(string.Format(DEFAULT_MESSAGE))
     {
-        this.ErrorMessage = "One of PackingItem parameters is null or empty.";
     }
 
     internal PackingItemParameterException(string message)
+        : base(string.Format(message))
     {
-        this.ErrorMessage = message;
     }
 }

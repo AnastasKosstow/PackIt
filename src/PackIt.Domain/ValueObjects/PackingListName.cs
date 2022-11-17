@@ -6,7 +6,7 @@ public record PackingListName
 {
     public string Value { get; private set; }
 
-	internal PackingListName(string value)
+    public PackingListName(string value)
 	{
 		if (string.IsNullOrWhiteSpace(value))
 		{
