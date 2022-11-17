@@ -30,7 +30,7 @@ public sealed class PackingList : IAggregateRoot
 
     internal void AddItem(PackingItem item)
     {
-        var alreadyExists = items.Any(x => x.Name == item.Name);
+        var alreadyExists = items.Any(pi => pi.Name == item.Name);
         if (alreadyExists)
         {
             throw new PackingItemAlreadyExistsException();
