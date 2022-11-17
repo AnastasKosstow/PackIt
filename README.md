@@ -1,2 +1,2 @@
 # PackIT
-PackIT is simple "packing list app" built on top of clean architecture and CQRS.
+PackIT is simple "packing list app" built on top of .NET 7, clean architecture and CQRS.
