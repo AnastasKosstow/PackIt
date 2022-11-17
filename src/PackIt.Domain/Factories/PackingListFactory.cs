@@ -9,6 +9,7 @@ internal sealed class PackingListFactory : IPackingListFactory
     private Guid id;
     private PackingListName listName;
     private Localization localization;
+    private Temperature temperature;
 
     public IPackingListFactory WithId(Guid id)
     {
@@ -19,6 +20,12 @@ internal sealed class PackingListFactory : IPackingListFactory
     public IPackingListFactory WithName(string name)
     {
         this.listName = new PackingListName(name);
+        return this;
+    }
+
+    public IPackingListFactory WithTemperature(double temperature)
+    {
+        this.temperature = new Temperature(temperature);
         return this;
     }
 
@@ -33,5 +40,5 @@ internal sealed class PackingListFactory : IPackingListFactory
 
     public PackingList Build()
         =>
-        new(id, listName, localization);
+        new(id, listName, localization, temperature);
 }

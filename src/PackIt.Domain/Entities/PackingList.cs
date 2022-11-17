@@ -10,20 +10,22 @@ public sealed class PackingList : IAggregateRoot
 
     private PackingListName name;
     private Localization localization;
+    private Temperature temperature;
 
     private readonly LinkedList<PackingItem> items;
 
-    internal PackingList(Guid id, PackingListName name, Localization localization, LinkedList<PackingItem> items)
-        : this(id, name, localization)
+    internal PackingList(Guid id, PackingListName name, Localization localization, Temperature temperature, LinkedList<PackingItem> items)
+        : this(id, name, localization, temperature)
     {
         this.items = items;
     }
 
-    internal PackingList(Guid id, PackingListName name, Localization localization)
+    internal PackingList(Guid id, PackingListName name, Localization localization, Temperature temperature)
     {
         Id = id;
         this.name = name;
         this.localization = localization;
+        this.temperature = temperature;
     }
 
     internal void AddItem(PackingItem item)

@@ -8,5 +8,6 @@ public interface IPackingListFactory : IFactory<PackingList>
 {
     IPackingListFactory WithId(Guid Id);
     IPackingListFactory WithName(string name);
+    IPackingListFactory WithTemperature(double temperature);
     IPackingListFactory WithLocalization(Action<ILocalizationConfiguration> localizationAction);
 }

@@ -37,9 +37,11 @@ public class ExceptionHandlerMiddleware
     {
         switch (exception)
         {
-            case EmptyPackingListNameException:
-                return HttpStatusCode.BadRequest; 
-            case LocalizationParameterException:
+            case InvalidTemperatureException or
+                 EmptyPackingListNameException or
+                 PackingItemParameterException or
+                 LocalizationParameterException or
+                 PackingItemAlreadyExistsException:
                 return HttpStatusCode.BadRequest;
 
             default:

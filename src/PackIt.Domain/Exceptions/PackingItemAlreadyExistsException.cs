@@ -1,6 +1,6 @@
 ﻿namespace PackIt.Domain.Exceptions;
 
-internal class PackingItemAlreadyExistsException : Exception
+public class PackingItemAlreadyExistsException : Exception
 {
     private const string DEFAULT_MESSAGE = "Packing item with the same name already exists.";
 
