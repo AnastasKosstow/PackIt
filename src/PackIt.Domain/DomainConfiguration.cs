@@ -7,7 +7,7 @@ public static class DomainConfiguration
 {
     public static IServiceCollection AddDomain(this IServiceCollection services)
     {
-        services.AddScoped<IPackingListFactory, PackingListFactory>();
+        services.AddSingleton<IPackingListFactory, PackingListFactory>();
         return services;
     }
 }
