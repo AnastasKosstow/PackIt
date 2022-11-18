@@ -5,16 +5,14 @@ using PackIt.Domain;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddApplication()
-    .AddDomain();
+    .AddDomain()
+    .AddApplication();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
 app.UseErrorHandler();
 app.UseHttpsRedirection();
-
-app.MapGet("/get", () =>
-{
-});
-
+app.MapControllers();
 app.Run();

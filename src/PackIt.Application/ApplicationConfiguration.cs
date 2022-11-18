@@ -9,15 +9,17 @@ public static class ApplicationConfiguration
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddSingleton<ICommandDispacher, InMemoryCommandDispatcher>();
+        services.AddSingleton<ICommandDispatcher, InMemoryCommandDispatcher>();
 
         var handlers = 
             GetCommandHandlersClasses()
             .ToList();
 
+
         handlers.ForEach(handler =>
         {
-            services.AddScoped(handler);
+            // ICommandHandler`1 - search for ICommandHandler interface with one generic argument
+            services.AddScoped(handler.GetInterface("ICommandHandler`1"), handler);
         });
 
         return services;

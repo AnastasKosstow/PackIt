@@ -3,7 +3,7 @@ using PackIt.Application.Abstractions;
 
 namespace PackIt.Application.Dispatcher;
 
-internal sealed class InMemoryCommandDispatcher : ICommandDispacher
+internal sealed class InMemoryCommandDispatcher : ICommandDispatcher
 {
     private readonly IServiceProvider serviceProvider;
 

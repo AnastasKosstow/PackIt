@@ -1,6 +1,6 @@
 ﻿namespace PackIt.Application.Abstractions;
 
-public interface ICommandDispacher
+public interface ICommandDispatcher
 {
     Task DispatchAsync<TCommand>(TCommand command, CancellationToken cancellationToken) 
         where TCommand : class, ICommand;
