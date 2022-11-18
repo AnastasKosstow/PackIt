@@ -8,7 +8,7 @@ public record PackingItem
     public ushort Quantity { get; private set; }
     public bool IsPacked { get; private set; }
 
-    internal PackingItem(string name, ushort quantity)
+    public PackingItem(string name, ushort quantity)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -22,5 +22,10 @@ public record PackingItem
         this.Name = name;
         this.Quantity = quantity;
         this.IsPacked = false;
+    }
+
+    internal void PackItem()
+    {
+        IsPacked = true;
     }
 }

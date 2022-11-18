@@ -11,8 +11,9 @@ public static class ApplicationConfiguration
     {
         services.AddSingleton<ICommandDispacher, InMemoryCommandDispatcher>();
 
-        var handlers = new List<Type>();
-        handlers.AddRange(GetClassesImplementingInterface());
+        var handlers = 
+            GetCommandHandlersClasses()
+            .ToList();
 
         handlers.ForEach(handler =>
         {
@@ -22,18 +23,18 @@ public static class ApplicationConfiguration
         return services;
     }
 
-    private static IEnumerable<Type> GetClassesImplementingInterface()
+    private static IEnumerable<Type> GetCommandHandlersClasses()
     {
         return Assembly.GetExecutingAssembly()
             .ExportedTypes
             .Where(type =>
             {
-                var implementRequestType = type
+                var implementType = type
                     .GetInterfaces()
                     .Any(@interface => @interface.IsGenericType &&
                                        @interface.GetGenericTypeDefinition() == typeof(ICommandHandler<>));
 
-                return implementRequestType;
+                return implementType;
             });
     }
 }

@@ -28,7 +28,7 @@ public sealed class PackingList : IAggregateRoot
         this.temperature = temperature;
     }
 
-    internal void AddItem(PackingItem item)
+    public void AddItem(PackingItem item)
     {
         var alreadyExists = items.Any(pi => pi.Name == item.Name);
         if (alreadyExists)
@@ -37,5 +37,16 @@ public sealed class PackingList : IAggregateRoot
         }
 
         items.AddLast(item);
+    }
+
+    public void PackItem(string name)
+    {
+        var item = items.FirstOrDefault(pi => pi.Name == name);
+        if (item is null)
+        {
+            throw new PackingItemNotFoundException($"Packing item with name - '{name}' not found.");
+        }
+
+        item.PackItem();
     }
 }
