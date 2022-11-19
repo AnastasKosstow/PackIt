@@ -9,23 +9,30 @@ public static class ApplicationConfiguration
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddSingleton<ICommandDispatcher, InMemoryCommandDispatcher>();
+        services
+            .AddSingleton<ICommandDispatcher, InMemoryCommandDispatcher>()
+            .AddSingleton<IQueryDispatcher, InMemoryQueryDispatcher>();
 
-        var handlers = 
-            GetCommandHandlersClasses()
-            .ToList();
+        GetHandlersClassesByType(typeof(ICommandHandler<>)).
+            ToList()
+            .ForEach(commandHandler =>
+            {
+                // ICommandHandler`1 - search for ICommandHandler interface with one generic argument
+                services.AddScoped(commandHandler.GetInterface("ICommandHandler`1"), commandHandler);
+            });
 
-
-        handlers.ForEach(handler =>
-        {
-            // ICommandHandler`1 - search for ICommandHandler interface with one generic argument
-            services.AddScoped(handler.GetInterface("ICommandHandler`1"), handler);
-        });
+        GetHandlersClassesByType(typeof(IQueryHandler<,>))
+            .ToList()
+            .ForEach(queryHandler =>
+            {
+                // IQueryHandler`2 - search for IQueryHandler interface with two generic arguments
+                services.AddScoped(queryHandler.GetInterface("IQueryHandler`2"), queryHandler);
+            });
 
         return services;
     }
 
-    private static IEnumerable<Type> GetCommandHandlersClasses()
+    private static IEnumerable<Type> GetHandlersClassesByType(Type implementationType)
     {
         return Assembly.GetExecutingAssembly()
             .ExportedTypes
@@ -34,7 +41,7 @@ public static class ApplicationConfiguration
                 var implementType = type
                     .GetInterfaces()
                     .Any(@interface => @interface.IsGenericType &&
-                                       @interface.GetGenericTypeDefinition() == typeof(ICommandHandler<>));
+                                       @interface.GetGenericTypeDefinition() == implementationType);
 
                 return implementType;
             });

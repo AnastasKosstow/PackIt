@@ -1,4 +1,4 @@
-﻿namespace PackIt.Application.Services;
+﻿namespace PackIt.Application.PackingList.Services;
 
 public interface IPackingListReadService
 {

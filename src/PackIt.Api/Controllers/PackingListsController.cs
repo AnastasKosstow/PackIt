@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PackIt.Application.Abstractions;
-using PackIt.Application.Commands;
+using PackIt.Application.PackingList.Commands;
 
 namespace PackIt.Api.Controllers;
 

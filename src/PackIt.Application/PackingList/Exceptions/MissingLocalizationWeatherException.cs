@@ -1,4 +1,4 @@
-﻿namespace PackIt.Application.Exceptions;
+﻿namespace PackIt.Application.PackingList.Exceptions;
 
 internal class MissingLocalizationWeatherException : Exception
 {

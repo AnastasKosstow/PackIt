@@ -1,9 +1,9 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.Exceptions;
+using PackIt.Application.PackingList.Exceptions;
 using PackIt.Domain.Repositories;
 using PackIt.Domain.ValueObjects;
 
-namespace PackIt.Application.Commands;
+namespace PackIt.Application.PackingList.Commands;
 
 public record AddPackingListItem(Guid ListId, string Name, ushort Quantity, bool IsPacked)
     : ICommand;

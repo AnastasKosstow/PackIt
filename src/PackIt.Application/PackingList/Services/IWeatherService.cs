@@ -1,6 +1,6 @@
-﻿using PackIt.Application.DTOs.External;
+﻿using PackIt.Application.PackingList.DTOs.External;
 
-namespace PackIt.Application.Services;
+namespace PackIt.Application.PackingList.Services;
 
 public interface IWeatherService
 {

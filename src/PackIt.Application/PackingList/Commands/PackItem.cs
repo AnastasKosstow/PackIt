@@ -1,8 +1,8 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.Exceptions;
+using PackIt.Application.PackingList.Exceptions;
 using PackIt.Domain.Repositories;
 
-namespace PackIt.Application.Commands;
+namespace PackIt.Application.PackingList.Commands;
 
 public record PackItem(Guid ListId, string Name)
     : ICommand;

@@ -1,10 +1,10 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.Exceptions;
-using PackIt.Application.Services;
+using PackIt.Application.PackingList.Exceptions;
+using PackIt.Application.PackingList.Services;
 using PackIt.Domain.Factories;
 using PackIt.Domain.Repositories;
 
-namespace PackIt.Application.Commands;
+namespace PackIt.Application.PackingList.Commands;
 
 public record CreatePackingList(Guid Id, string Name, string Country, string City)
     : ICommand;
@@ -18,8 +18,8 @@ public class CreatePackingListHandler : ICommandHandler<CreatePackingList>
     private readonly IWeatherService weatherService;
 
     public CreatePackingListHandler(
-        IPackingListFactory factory, 
-        IPackingListRepository repository, 
+        IPackingListFactory factory,
+        IPackingListRepository repository,
         IPackingListReadService readService,
         IWeatherService weatherService)
     {
