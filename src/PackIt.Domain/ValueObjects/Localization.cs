@@ -22,6 +22,12 @@ public record Localization
         Country = country;
     }
 
+    public static Localization Create(string value)
+    {
+        var splitLocalization = value.Split(',');
+        return new Localization(splitLocalization.First(), splitLocalization.Last());
+    }
+
     public override string ToString()
     {
         return $"Country: {this.Country}, City: {this.City}";

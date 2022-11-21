@@ -1,6 +1,6 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.PackingList.Exceptions;
-using PackIt.Application.PackingList.Services;
+using PackIt.Application.PackingList.Shared.Exceptions;
+using PackIt.Application.PackingList.Shared.Services;
 using PackIt.Domain.Factories;
 using PackIt.Domain.Repositories;
 
@@ -12,28 +12,28 @@ public record CreatePackingList(Guid Id, string Name, string Country, string Cit
 
 public class CreatePackingListHandler : ICommandHandler<CreatePackingList>
 {
-    private readonly IPackingListFactory factory;
-    private readonly IPackingListRepository repository;
-    private readonly IPackingListReadService readService;
     private readonly IWeatherService weatherService;
+    private readonly IPackingListFactory factory;
+    private readonly IPackingListQueryRepository queryRepository;
+    private readonly IPackingListDomainRepository domainRepository;
 
     public CreatePackingListHandler(
+        IWeatherService weatherService,
         IPackingListFactory factory,
-        IPackingListRepository repository,
-        IPackingListReadService readService,
-        IWeatherService weatherService)
+        IPackingListQueryRepository queryRepository,
+        IPackingListDomainRepository domainRepository)
     {
         this.factory = factory;
-        this.repository = repository;
-        this.readService = readService;
         this.weatherService = weatherService;
+        this.queryRepository = queryRepository;
+        this.domainRepository = domainRepository;
     }
 
     public async Task HandleAsync(CreatePackingList command, CancellationToken cancellationToken)
     {
         var (id, name, country, city) = command;
 
-        if (await readService.ExistsByNameAsync(command.Name))
+        if (await queryRepository.ExistsByNameAsync(command.Name))
         {
             throw new PackingListAlreadyExistsException($"Packing list with name - '{name}' already exists.");
         }
@@ -57,6 +57,6 @@ public class CreatePackingListHandler : ICommandHandler<CreatePackingList>
             .WithTemperature(weather.Temperature)
             .Build();
 
-        await repository.AddAsync(packingList);
+        await domainRepository.AddAsync(packingList);
     }
 }

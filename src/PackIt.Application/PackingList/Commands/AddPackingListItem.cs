@@ -1,19 +1,19 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.PackingList.Exceptions;
+using PackIt.Application.PackingList.Shared.Exceptions;
 using PackIt.Domain.Repositories;
 using PackIt.Domain.ValueObjects;
 
 namespace PackIt.Application.PackingList.Commands;
 
-public record AddPackingListItem(Guid ListId, string Name, ushort Quantity, bool IsPacked)
+public record AddPackingListItem(Guid ListId, string Name, ushort Quantity)
     : ICommand;
 
 
 public sealed class AddPackingListItemHandler : ICommandHandler<AddPackingListItem>
 {
-    private readonly IPackingListRepository repository;
+    private readonly IPackingListDomainRepository repository;
 
-    public AddPackingListItemHandler(IPackingListRepository repository)
+    public AddPackingListItemHandler(IPackingListDomainRepository repository)
     {
         this.repository = repository;
     }

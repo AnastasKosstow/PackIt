@@ -1,5 +1,5 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.PackingList.Exceptions;
+using PackIt.Application.PackingList.Shared.Exceptions;
 using PackIt.Domain.Repositories;
 
 namespace PackIt.Application.PackingList.Commands;
@@ -10,22 +10,22 @@ public record PackItem(Guid ListId, string Name)
 
 public class PackItemHandler : ICommandHandler<PackItem>
 {
-    private readonly IPackingListRepository repository;
+    private readonly IPackingListDomainRepository domainRepository;
 
-    public PackItemHandler(IPackingListRepository repository)
+    public PackItemHandler(IPackingListDomainRepository domainRepository)
     {
-        this.repository = repository;
+        this.domainRepository = domainRepository;
     }
 
     public async Task HandleAsync(PackItem command, CancellationToken cancellationToken)
     {
-        var packingList = await repository.GetAsync(command.ListId);
+        var packingList = await domainRepository.GetAsync(command.ListId);
         if (packingList is null)
         {
             throw new PackingListNotFoundException($"Packing list with id - '{command.ListId}' not found");
         }
 
         packingList.PackItem(command.Name);
-        await repository.UpdateAsync(packingList);
+        await domainRepository.UpdateAsync(packingList);
     }
 }

@@ -7,46 +7,68 @@ namespace PackIt.Domain.Entities;
 public sealed class PackingList : IAggregateRoot
 {
     public Guid Id { get; private set; }
+    public PackingListName Name { get; private set; }
+    public Localization Localization { get; private set; }
+    public Temperature Temperature { get; private set; }
+    public LinkedList<PackingItem> Items { get; private set; }
 
-    private PackingListName name;
-    private Localization localization;
-    private Temperature temperature;
-
-    private readonly LinkedList<PackingItem> items;
+    private PackingList()
+    {
+    }
 
     internal PackingList(Guid id, PackingListName name, Localization localization, Temperature temperature, LinkedList<PackingItem> items)
         : this(id, name, localization, temperature)
     {
-        this.items = items;
+        Items = items;
     }
 
     internal PackingList(Guid id, PackingListName name, Localization localization, Temperature temperature)
     {
         Id = id;
-        this.name = name;
-        this.localization = localization;
-        this.temperature = temperature;
+        Name = name;
+        Localization = localization;
+        Temperature = temperature;
     }
 
     public void AddItem(PackingItem item)
     {
-        var alreadyExists = items.Any(pi => pi.Name == item.Name);
+        var alreadyExists = Items.Any(pi => pi.Name == item.Name);
         if (alreadyExists)
         {
             throw new PackingItemAlreadyExistsException();
         }
 
-        items.AddLast(item);
+        Items.AddLast(item);
+    }
+
+    public void AddItems(IEnumerable<PackingItem> items)
+    {
+        foreach (var item in items)
+        {
+            AddItem(item);
+        }
     }
 
     public void PackItem(string name)
     {
-        var item = items.FirstOrDefault(pi => pi.Name == name);
+        var item = GetItem(name);
+        item.PackItem();
+    }
+
+    public void RemoveItem(string name)
+    {
+        var item = GetItem(name);
+        Items.Remove(item);
+    }
+
+    private PackingItem GetItem(string name)
+    {
+        var item = Items.SingleOrDefault(pi => pi.Name == name);
         if (item is null)
         {
             throw new PackingItemNotFoundException($"Packing item with name - '{name}' not found.");
         }
 
-        item.PackItem();
+        return item;
     }
 }

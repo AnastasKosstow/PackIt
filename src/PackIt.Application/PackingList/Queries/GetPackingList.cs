@@ -1,26 +1,30 @@
 ﻿using PackIt.Application.Abstractions;
-using PackIt.Application.PackingList.DTOs;
-using PackIt.Domain.Repositories;
+using PackIt.Application.PackingList.Shared.DTOs;
+using PackIt.Application.PackingList.Shared.Exceptions;
 
 namespace PackIt.Application.PackingList.Queries;
 
-public class GetPackingList : IQuery<PackingListDto>
-{
-    public Guid Id { get; set; }
-}
+public record GetPackingList(Guid ListId) 
+    : IQuery<PackingListDto>;
+
 
 public class GetPackingListHandler : IQueryHandler<GetPackingList, PackingListDto>
 {
-    private readonly IPackingListRepository repository;
+    private readonly IPackingListQueryRepository queryRepository;
 
-    public GetPackingListHandler(IPackingListRepository repository)
+    public GetPackingListHandler(IPackingListQueryRepository queryRepository)
     {
-        this.repository = repository;
+        this.queryRepository = queryRepository;
     }
 
     public async Task<PackingListDto> HandleAsync(GetPackingList query)
     {
-        var packingList = await repository.GetAsync(query.Id);
-        return new PackingListDto(packingList.Id, "");
+        var packingList = await queryRepository.TryGetByIdAsync(query.ListId);
+        if (packingList is null)
+        {
+            throw new PackingListNotFoundException($"Packing list with id - '{query.ListId}' not found");
+        }
+
+        return packingList;
     }
 }

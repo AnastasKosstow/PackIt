@@ -3,7 +3,7 @@ using PackIt.Domain.Entities;
 
 namespace PackIt.Domain.Repositories;
 
-public interface IPackingListRepository : IRepository<PackingList>
+public interface IPackingListDomainRepository : IRepository<PackingList>
 {
     Task<PackingList> GetAsync(Guid id);
     Task AddAsync(PackingList list);
